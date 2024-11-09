@@ -55,9 +55,9 @@ public class UserController {
 
         // 2. Guarda la ruta en la base de datos.
         String photoUrl = "/" + userFolder + "/" + fileName;
-        // Aquí guarda photoUrl en la base de datos.
-
-        return ResponseEntity.ok("File uploaded successfully: " + photoUrl);
+        
+        Map<String, Object> response = userService.addProfilePhotoUrl(userId, photoUrl);
+        return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
     
     @GetMapping("/{userId}/profile-photo")
