@@ -52,7 +52,23 @@ public class UserService {
         return response;
     }
     
-    public Map<String, Object> addProfilePhotoUrl(Long userId) {
+    public Map<String, Object> addProfilePhotoUrl(Long userId, String photoUrl) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Optional<User> usuario = userRepository.findById(userId);
+            if (usuario.isPresent()) {
+                usuario.get().setProfilePhotoUrl(photoUrl);
+                User updatedUser = userRepository.save(usuario.get());
+                response.put("status", "success");
+                response.put("message", "Url actualizada correctamente.");
+                response.put("data", updatedUser);
+            } else {
+                response.put("status", "error");
+                response.put("message", "Usuario no encontrado.");
+                response.put("errorType", "not_found");
+            }
+        } catch (Exception e) {
+        }
         return null;
     }
     
