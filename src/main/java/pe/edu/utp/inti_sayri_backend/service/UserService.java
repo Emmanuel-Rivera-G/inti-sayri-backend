@@ -23,6 +23,7 @@ public class UserService {
         if (usuarioExistente.isPresent()) {
             response.put("status", "error");
             response.put("message", "El correo ya está registrado.");
+            response.put("errorType", "bad_request");
             return response;
         }
         
@@ -45,6 +46,29 @@ public class UserService {
         } else {
             response.put("status", "error");
             response.put("message", "Correo o contraseña incorrectos.");
+            response.put("errorType", "unauthorized");
+        }
+        
+        return response;
+    }
+    
+    public Map<String, Object> addProfilePhotoUrl(Long userId) {
+        return null;
+    }
+    
+    public Map<String, Object> getProfilePhotoUrl(Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        
+        String photoUrl = userRepository.findById(userId).get().getProfilePhotoUrl();
+        
+        if (photoUrl != null) {
+            response.put("status", "success");
+            response.put("message", "Url encontrada correctamente.");
+            response.put("data", photoUrl);
+        } else {
+            response.put("status", "error");
+            response.put("message", "Url no encontrada.");
+            response.put("errorType", "not_found");
         }
         
         return response;
