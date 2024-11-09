@@ -1,5 +1,6 @@
 package pe.edu.utp.inti_sayri_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,5 +24,6 @@ public class User {
     private String profilePhotoUrl;
     
     @ManyToMany(mappedBy = "participantes")
+    @JsonBackReference
     private List<Chat> chats;
 }

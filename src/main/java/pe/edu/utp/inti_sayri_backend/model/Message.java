@@ -1,5 +1,6 @@
 package pe.edu.utp.inti_sayri_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,5 +25,6 @@ public class Message {
     
     @ManyToOne
     @JoinColumn(name = "chat_id", nullable = false)
+    @JsonBackReference
     private Chat chat;
 }
