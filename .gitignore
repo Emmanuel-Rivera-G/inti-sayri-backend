@@ -29,6 +29,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 nbactions.xml
+/uploads/
 
 ### VS Code ###
 .vscode/
