@@ -31,7 +31,7 @@ public class UserController {
     @PostMapping("/{userId}/profile-photo")
     public ResponseEntity<?> uploadPhoto(@PathVariable("userId") Long userId, @RequestParam("file") MultipartFile file) {
         String userFolder = "uploads/" + userId + "/profile";
-        Path userDirectory = Paths.get(userFolder);
+        Path userDirectory = Paths.get( userFolder );
         
         if (!Files.exists(userDirectory)) {
             try {
@@ -51,6 +51,7 @@ public class UserController {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating user folder");
         }
 
         // 2. Guarda la ruta en la base de datos.
@@ -61,7 +62,7 @@ public class UserController {
     }
     
     @GetMapping("/{userId}/profile-photo")
-    public ResponseEntity<Map<String, Object>> getProfilePhoto(@PathVariable Long userId) {
+    public ResponseEntity<Map<String, Object>> getProfilePhoto(@PathVariable("userId") Long userId) {
         // Busca la URL de la foto de perfil en la base de datos
         Map<String, Object> response = userService.getProfilePhotoUrl(userId);
         return ResponseUtil.createResponse(response, HttpStatus.OK);

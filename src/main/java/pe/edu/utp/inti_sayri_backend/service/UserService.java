@@ -69,7 +69,7 @@ public class UserService {
             }
         } catch (Exception e) {
         }
-        return null;
+        return response;
     }
     
     public Map<String, Object> getProfilePhotoUrl(Long userId) {
