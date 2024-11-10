@@ -30,6 +30,10 @@ public class ContactoService {
         return contactoRepository.findById(id);
     }
     
+    public List<Contacto> obtenerContactosPorUserId(Long userId) {
+        return contactoRepository.findAllByUserId(userId);
+    }
+    
     public void eliminarContacto(Long id) {
         contactoRepository.deleteById(id);
     }

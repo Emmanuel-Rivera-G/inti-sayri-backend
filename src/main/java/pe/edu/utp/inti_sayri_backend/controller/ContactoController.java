@@ -38,6 +38,12 @@ public class ContactoController {
         return contacto.map(ResponseEntity::ok)
                        .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Contacto>> obtenerContactosPorUserId(@PathVariable("userId") Long userId) {
+        List<Contacto> contactos = contactoService.obtenerContactosPorUserId(userId);
+        return ResponseEntity.ok(contactos);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarContacto(@PathVariable("id") Long id) {
