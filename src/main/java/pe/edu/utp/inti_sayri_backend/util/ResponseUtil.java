@@ -13,7 +13,7 @@ public class ResponseUtil {
             return new ResponseEntity<>(response, successStatus);
         } else {
             String errorType = (String) response.get("errorType");
-            HttpStatus errorStatus = getErrorStatus(errorType);
+            HttpStatus errorStatus = getErrorStatus(errorType == null ? "" : errorType);
             return new ResponseEntity<>(response, errorStatus);
         }
     }

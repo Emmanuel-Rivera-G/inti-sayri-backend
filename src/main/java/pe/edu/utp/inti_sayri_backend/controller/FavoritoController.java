@@ -49,4 +49,21 @@ public class FavoritoController {
                                                     @PathVariable("locationId") Long locationId) {
         return favoritoService.removeFavoritoByCorreoElectronico(correoElectronico, locationId);
     }
+    
+    @PostMapping("/add-by-name")
+    public String addFavoritoByName(@RequestParam(value = "nombreCompleto") String nombreCompleto, 
+                                    @RequestParam(value = "location-id") Long locationId) {
+        return favoritoService.addFavoritoByName(nombreCompleto, locationId);
+    }
+    
+    @PostMapping("/{nombreCompleto}/add-location")
+    public String addFavoritoByFullName(@PathVariable("nombreCompleto") String nombreCompleto, 
+                                        @RequestBody Location location) {
+        return favoritoService.addFavoritoByName(nombreCompleto, location);
+    }
+    
+    @GetMapping("/{nombreCompleto}/get-locations")
+    public List<Location> getLocationsByNombreCompleto(@PathVariable("nombreCompleto") String correoElectronico) {
+        return favoritoService.getLocationsByNombreCompleto(correoElectronico);
+    }
 }

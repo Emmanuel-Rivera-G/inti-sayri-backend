@@ -74,6 +74,23 @@ public class FavoritoService {
             return Collections.emptyList(); // Retorna una lista vacía si no se encuentra el usuario
         }
     }
+    
+    public List<Location> getLocationsByNombreCompleto(String nombreCompleto) {
+        Optional<User> userOpt = userRepository.findByNombreCompleto(nombreCompleto);
+        
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            // Buscar los favoritos de ese usuario
+            List<Favorito> favoritos = favoritoRepository.findByUserId(user.getId());
+            // Extraer las ubicaciones asociadas a esos favoritos
+            List<Location> locations = favoritos.stream()
+                    .map(Favorito::getLocation)
+                    .collect(Collectors.toList());
+            return locations;
+        } else {
+            return Collections.emptyList(); // Retorna una lista vacía si no se encuentra el usuario
+        }
+    }
 
     public String removeFavorito(Long userId, Long locationId) {
         Optional<Favorito> favoritoOpt = favoritoRepository.findByUserIdAndLocationId(userId, locationId);
@@ -97,6 +114,37 @@ public class FavoritoService {
             } else {
                 return "Favorito no encontrado.";
             }
+        } else {
+            return "Usuario no encontrado.";
+        }
+    }
+    
+    public String addFavoritoByName(String nombreCompleto, Long locationId) {
+        Optional<User> userOpt = userRepository.findByNombreCompleto(nombreCompleto);
+        Optional<Location> locationOpt = locationRepository.findById(locationId);
+
+        if (userOpt.isPresent() && locationOpt.isPresent()) {
+            Favorito favorito = Favorito.builder()
+                    .user(userOpt.get())
+                    .location(locationOpt.get())
+                    .build();
+            favoritoRepository.save(favorito);
+            return "Favorito agregado correctamente.";
+        } else {
+            return "Usuario o ubicación no encontrados.";
+        }
+    }
+
+    public String addFavoritoByName(String nombreCompleto, Location location) {
+        Optional<User> userOpt = userRepository.findByNombreCompleto(nombreCompleto);
+        if (userOpt.isPresent()) {
+            Location locationSaved = locationRepository.save(location);
+            Favorito favorito = Favorito.builder()
+                    .user(userOpt.get())
+                    .location(locationSaved)
+                    .build();
+            favoritoRepository.save(favorito);
+            return "Favorito agregado correctamente.";
         } else {
             return "Usuario no encontrado.";
         }
