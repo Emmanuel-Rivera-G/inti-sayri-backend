@@ -4,10 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,21 +16,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "favoritos")
+public class Favorito {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String nombreCompleto;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     
-    private String correoElectronico;
-    
-    private String contrasena;
-    
-    private String profilePhotoUrl;
-    
-    @ManyToMany(mappedBy = "participantes")
-    private List<Chat> chats = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
 }

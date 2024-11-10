@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -29,18 +30,9 @@ public class Location {
     
     private String address;
     
-    private Map<String,Double> location;
+    private String location;
     
     private String name;
     
     private String phone;
-    
-    @ManyToMany
-    @JoinTable(
-        name = "favoritos",
-        joinColumns = @JoinColumn(name = "location_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    @JsonIgnoreProperties("favoritos")
-    private List<User> usuariosFavoritos;
 }

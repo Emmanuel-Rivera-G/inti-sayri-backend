@@ -11,6 +11,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,9 +38,9 @@ public class Chat {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @JsonIgnoreProperties("chats")
-    private List<User> participantes;
+    private List<User> participantes = new ArrayList<>();
     
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("remitente")
-    private List<Message> mensajes;
+    private List<Message> mensajes = new ArrayList<>();
 }

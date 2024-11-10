@@ -1,6 +1,5 @@
 package pe.edu.utp.inti_sayri_backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.utp.inti_sayri_backend.model.Location;
@@ -24,8 +23,8 @@ public class LocationController {
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> getLocationById(@PathVariable("id") String id) {
+    @GetMapping("/{locationId}")
+    public ResponseEntity<Map<String, Object>> getLocationById(@PathVariable("locationId") String id) {
         Map<String, Object> response = locationService.getLocationById(id);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
@@ -36,15 +35,17 @@ public class LocationController {
         return ResponseUtil.createResponse(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> updateLocation(@PathVariable("id") String id, @RequestBody Location location) {
+    @PutMapping("/{locationId}")
+    public ResponseEntity<Map<String, Object>> updateLocation(@PathVariable("locationId") String id, @RequestBody Location location) {
         Map<String, Object> response = locationService.updateLocation(id, location);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> deleteLocation(@PathVariable("id") String id) {
+    @DeleteMapping("/{locationId}")
+    public ResponseEntity<Map<String, Object>> deleteLocation(@PathVariable("locationId") String id) {
         Map<String, Object> response = locationService.deleteLocation(id);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
+    
+    
 }

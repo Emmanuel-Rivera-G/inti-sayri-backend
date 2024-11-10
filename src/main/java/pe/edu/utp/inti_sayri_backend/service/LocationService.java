@@ -45,7 +45,15 @@ public class LocationService {
     public Map<String, Object> saveLocation(Location location) {
         Map<String, Object> response = new HashMap<>();
         try {
-            Location savedLocation = locationRepository.save(location);
+            Location locationToSave = Location.builder()
+                    .id(location.getId() != null ? location.getId() : null)
+                    .address(location.getAddress() != null ? location.getAddress() : null)
+                    .location(location.getLocation() != null ? location.getLocation() : null)
+                    .name(location.getName() != null ? location.getName() : null)
+                    .phone(location.getPhone() != null ? location.getPhone() : null)
+                    .build();
+
+            Location savedLocation = locationRepository.save(locationToSave);
             completeResponse(response, "success", "Ubicación guardada con éxito", savedLocation);
         } catch (IllegalArgumentException e) {
             incompleteResponse(response, "error", "Datos de la ubicación no válidos: " + e.getMessage(), "bad_request");
@@ -98,7 +106,7 @@ public class LocationService {
         response.put("errorType", errorType);
         completeResponse(response, status, message, null);
     }
-
+    
     private void incompleteResponse(Map<String, Object> response, String status, String message) {
         incompleteResponse(response, status, message, null);
     }

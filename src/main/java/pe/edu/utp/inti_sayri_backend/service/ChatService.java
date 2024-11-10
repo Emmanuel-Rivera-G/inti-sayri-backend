@@ -11,8 +11,6 @@ import pe.edu.utp.inti_sayri_backend.model.Message;
 import pe.edu.utp.inti_sayri_backend.model.User;
 import pe.edu.utp.inti_sayri_backend.repository.ChatRepository;
 import pe.edu.utp.inti_sayri_backend.repository.MessageRepository;
-import pe.edu.utp.inti_sayri_backend.repository.UserRepository;
-
 @Service
 public class ChatService {
     
@@ -20,7 +18,7 @@ public class ChatService {
     private ChatRepository chatRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     
     @Autowired
     private MessageRepository messageRepository;
@@ -69,19 +67,26 @@ public class ChatService {
         try {
             Optional<Chat> chat = chatRepository.findById(chatId);
 
-            Chat chatToUse;
-            if (chat.isPresent()) {
-                chatToUse = chat.get();
-            } else {
-                chatToUse = new Chat();
-                chatToUse.setId(chatId);
-                chatToUse = chatRepository.save(chatToUse);
+            Chat chatToUse = chat.orElse(new Chat());
+            
+            if (message != null) {
+                message.setChat(chatToUse);
                 chatToUse.getMensajes().add(message);
-                response.put("newChatCreated", true);
             }
-
-            message.setChat(chatToUse);
-            Message savedMessage = messageRepository.save(message);
+            
+            chatToUse = chatRepository.save(chatToUse);
+            
+            Message savedMessage = null;
+            
+            if (message != null) {
+                savedMessage = messageRepository.save(message);
+            }
+            
+            if (savedMessage == null) {
+                incompleteResponse(response, "error", "Error mensaje nulo: ");
+                return response;
+            }
+            
             completeResponse(response, "success", "Mensaje agregado al chat con éxito", savedMessage);
 
         } catch (Exception e) {
@@ -95,10 +100,11 @@ public class ChatService {
         try {
             Chat chat = chatRepository.findById(chatId)
                     .orElseThrow(() -> new RuntimeException("Chat no encontrado"));
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            User user = userService.findById(userId);
 
             chat.getParticipantes().add(user);
+            user.getChats().add(chat);
+            userService.updateUser(user);
             Chat updatedChat = chatRepository.save(chat);
             completeResponse(response, "success", "Participante agregado al chat con éxito", updatedChat);
         } catch (Exception e) {

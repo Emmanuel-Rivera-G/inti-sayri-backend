@@ -52,6 +52,14 @@ public class UserService {
         return response;
     }
     
+    public User findById(Long userId) {
+        return userRepository.findById(userId).get();
+    }
+    
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+    
     public Map<String, Object> addProfilePhotoUrl(Long userId, String photoUrl) {
         Map<String, Object> response = new HashMap<>();
         try {
