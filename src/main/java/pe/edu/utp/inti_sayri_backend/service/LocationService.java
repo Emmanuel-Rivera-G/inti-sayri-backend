@@ -48,7 +48,7 @@ public class LocationService {
             Location locationToSave = Location.builder()
                     .id(location.getId() != null ? location.getId() : null)
                     .address(location.getAddress() != null ? location.getAddress() : null)
-                    .location(location.getLocation() != null ? location.getLocation() : null)
+                    .position(location.getPosition()!= null ? location.getPosition(): null)
                     .name(location.getName() != null ? location.getName() : null)
                     .phone(location.getPhone() != null ? location.getPhone() : null)
                     .build();
@@ -70,7 +70,7 @@ public class LocationService {
             if (location.isPresent()) {
                 Location updatedLocation = location.get();
                 updatedLocation.setAddress(newLocationData.getAddress());
-                updatedLocation.setLocation(newLocationData.getLocation());
+                updatedLocation.setPosition(newLocationData.getPosition());
                 updatedLocation.setName(newLocationData.getName());
                 updatedLocation.setPhone(newLocationData.getPhone());
                 locationRepository.save(updatedLocation);

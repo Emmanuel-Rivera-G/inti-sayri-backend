@@ -37,4 +37,8 @@ public class ContactoService {
     public void eliminarContacto(Long id) {
         contactoRepository.deleteById(id);
     }
+    
+    public void eliminarContactoBidireccional(Long userId, Long contactoId) {
+        contactoRepository.deleteByUserIdAndContactoIdOrContactoIdAndUserId(userId, contactoId, contactoId, userId);
+    }
 }

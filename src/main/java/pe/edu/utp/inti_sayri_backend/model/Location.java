@@ -1,6 +1,7 @@
 package pe.edu.utp.inti_sayri_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +33,8 @@ public class Location {
     
     private String address;
     
-    private String location;
+    @Embedded
+    private LocationPosition position;
     
     private String name;
     

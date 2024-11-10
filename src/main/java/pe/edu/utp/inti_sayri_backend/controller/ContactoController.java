@@ -50,4 +50,10 @@ public class ContactoController {
         contactoService.eliminarContacto(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @DeleteMapping("/{userId}/{contactoId}")
+    public ResponseEntity<Void> eliminarContactoBidireccional(@PathVariable("userId") Long userId, @PathVariable("contactoId") Long contactoId) {
+        contactoService.eliminarContactoBidireccional(userId, contactoId);
+        return ResponseEntity.noContent().build();
+    }
 }
