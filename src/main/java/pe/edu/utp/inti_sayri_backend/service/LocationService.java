@@ -27,7 +27,7 @@ public class LocationService {
         return response;
     }
 
-    public Map<String, Object> getLocationById(String id) {
+    public Map<String, Object> getLocationById(Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
             Optional<Location> location = locationRepository.findById(id);
@@ -63,7 +63,7 @@ public class LocationService {
         return response;
     }
 
-    public Map<String, Object> updateLocation(String id, Location newLocationData) {
+    public Map<String, Object> updateLocation(Long id, Location newLocationData) {
         Map<String, Object> response = new HashMap<>();
         try {
             Optional<Location> location = locationRepository.findById(id);
@@ -84,7 +84,7 @@ public class LocationService {
         return response;
     }
 
-    public Map<String, Object> deleteLocation(String id) {
+    public Map<String, Object> deleteLocation(Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
             locationRepository.deleteById(id);

@@ -24,7 +24,7 @@ public class LocationController {
     }
 
     @GetMapping("/{locationId}")
-    public ResponseEntity<Map<String, Object>> getLocationById(@PathVariable("locationId") String id) {
+    public ResponseEntity<Map<String, Object>> getLocationById(@PathVariable("locationId") Long id) {
         Map<String, Object> response = locationService.getLocationById(id);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
@@ -36,13 +36,13 @@ public class LocationController {
     }
 
     @PutMapping("/{locationId}")
-    public ResponseEntity<Map<String, Object>> updateLocation(@PathVariable("locationId") String id, @RequestBody Location location) {
+    public ResponseEntity<Map<String, Object>> updateLocation(@PathVariable("locationId") Long id, @RequestBody Location location) {
         Map<String, Object> response = locationService.updateLocation(id, location);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{locationId}")
-    public ResponseEntity<Map<String, Object>> deleteLocation(@PathVariable("locationId") String id) {
+    public ResponseEntity<Map<String, Object>> deleteLocation(@PathVariable("locationId") Long id) {
         Map<String, Object> response = locationService.deleteLocation(id);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }

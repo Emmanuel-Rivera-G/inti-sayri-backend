@@ -16,14 +16,14 @@ public class FavoritoService {
 
     @Autowired
     private FavoritoRepository favoritoRepository;
-
+    
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private LocationRepository locationRepository;
 
-    public String addFavorito(Long userId, String locationId) {
+    public String addFavorito(Long userId, Long locationId) {
         Optional<User> userOpt = userRepository.findById(userId);
         Optional<Location> locationOpt = locationRepository.findById(locationId);
 
@@ -39,7 +39,7 @@ public class FavoritoService {
         }
     }
 
-    public String removeFavorito(Long userId, String locationId) {
+    public String removeFavorito(Long userId, Long locationId) {
         Optional<Favorito> favoritoOpt = favoritoRepository.findByUserIdAndLocationId(userId, locationId);
         if (favoritoOpt.isPresent()) {
             favoritoRepository.delete(favoritoOpt.get());

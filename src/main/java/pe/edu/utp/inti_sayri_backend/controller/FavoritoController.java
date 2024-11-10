@@ -12,22 +12,22 @@ public class FavoritoController {
     private FavoritoService favoritoService;
 
     @PostMapping("/add")
-    public String addFavorito(@RequestParam(value = "user-id") Long userId, @RequestParam(value = "location-id") String locationId) {
+    public String addFavorito(@RequestParam(value = "user-id") Long userId, @RequestParam(value = "location-id") Long locationId) {
         return favoritoService.addFavorito(userId, locationId);
     }
     
     @PostMapping("/{userId}/add/{locationId}")
-    public String addUrlPathFavorito(@PathVariable("userId") Long userId, @PathVariable(value = "locationId") String locationId) {
+    public String addUrlPathFavorito(@PathVariable("userId") Long userId, @PathVariable(value = "locationId") Long locationId) {
         return favoritoService.addFavorito(userId, locationId);
     }
 
     @DeleteMapping("/remove")
-    public String removeFavorito(@RequestParam(value = "user-id") Long userId, @RequestParam(value = "location-id") String locationId) {
+    public String removeFavorito(@RequestParam(value = "user-id") Long userId, @RequestParam(value = "location-id") Long locationId) {
         return favoritoService.removeFavorito(userId, locationId);
     }
     
     @DeleteMapping("/{userId}/remove/{locationId}")
-    public String removeUrlPathFavorito(@PathVariable("userId") Long userId, @PathVariable(value = "locationId") String locationId) {
+    public String removeUrlPathFavorito(@PathVariable("userId") Long userId, @PathVariable(value = "locationId") Long locationId) {
         return favoritoService.removeFavorito(userId, locationId);
     }
 }
