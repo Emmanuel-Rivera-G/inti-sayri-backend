@@ -1,5 +1,6 @@
 package pe.edu.utp.inti_sayri_backend.websocket.controller;
 
+import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -20,21 +21,34 @@ public class ChatWebSocketController {
     @Autowired
     private ChatService chatService;
     
-    @MessageMapping("/enviarMensaje")
-    @SendTo("/topic/public")
+    private ConcurrentHashMap<String, String> userSessions = new ConcurrentHashMap<String, String>();
+    
+    @MessageMapping("/enviar-mensajes")
+    @SendTo("/tema/public/recibir-mensaje")
     public Message sendMessage(@Payload Message mensaje) {
         chatService.addMessageToChat(mensaje.getChat().getId(), mensaje);
         return mensaje;
     }
     
-    @MessageMapping("/userMensaje")
-    @SendTo("/queue/public")
+    @MessageMapping("/add-user")
+    @SendTo("/cola/public")
     public Message addUser(@Payload Message mensaje, SimpMessageHeaderAccessor headerAccesor) {
-        headerAccesor.getSessionAttributes().put("username", mensaje.getRemitente().getNombreCompleto());
+        String userId = mensaje.getRemitente().getId().toString();
+        headerAccesor.getSessionAttributes().put("userId", userId);
+        
+        userSessions.put(userId, headerAccesor.getSessionId());
+
         return mensaje;
     }
 
     public void enviarMensajePrivado(User destinatario, Message mensaje) {
-        messagingTemplate.convertAndSendToUser(destinatario.getId().toString() , "/queue/mensajes", mensaje);
+        String sessionId = userSessions.get(destinatario.getId().toString());
+        if (sessionId != null) {
+            messagingTemplate.convertAndSendToUser(sessionId, "/cola/mensajes-privados", mensaje);
+        }
+    }
+    
+    public void removeUserSession(String username) {
+        userSessions.remove(username);
     }
 }
