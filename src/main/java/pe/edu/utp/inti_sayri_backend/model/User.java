@@ -33,4 +33,7 @@ public class User {
     
     @ManyToMany(mappedBy = "participantes")
     private List<Chat> chats;
+    
+    @ManyToMany(mappedBy = "usuariosFavoritos")
+    private List<Location> favoritos;
 }
