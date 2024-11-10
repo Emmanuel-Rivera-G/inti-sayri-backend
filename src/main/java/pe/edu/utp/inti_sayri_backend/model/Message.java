@@ -1,6 +1,6 @@
 package pe.edu.utp.inti_sayri_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,11 +20,20 @@ public class Message {
     private Long id;
     
     private String contenido;
-    private String remitente;
     private String marcaTemporal;
     
     @ManyToOne
+    @JoinColumn(name = "remitente_id", nullable = false)
+    @JsonIgnoreProperties("chats")
+    private User remitente;
+    
+    @ManyToOne
+    @JoinColumn(name = "destinatario_id", nullable = false)
+    @JsonIgnoreProperties("chats")
+    private User destinatario;
+    
+    @ManyToOne
     @JoinColumn(name = "chat_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnoreProperties("messages")
     private Chat chat;
 }

@@ -8,14 +8,15 @@ import pe.edu.utp.inti_sayri_backend.model.Message;
 import pe.edu.utp.inti_sayri_backend.service.ChatService;
 
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import pe.edu.utp.inti_sayri_backend.util.ResponseUtil;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/chats")
 public class ChatController {
 
-    @Autowired
     private ChatService chatService;
 
     @PostMapping
