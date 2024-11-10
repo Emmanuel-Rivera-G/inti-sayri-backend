@@ -11,14 +11,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contactos")
+@CrossOrigin("*")
 public class ContactoController {
 
-    private final ContactoService contactoService;
-
     @Autowired
-    public ContactoController(ContactoService contactoService) {
-        this.contactoService = contactoService;
-    }
+    private ContactoService contactoService;
 
     @PostMapping
     public ResponseEntity<Contacto> crearContacto(@RequestBody Contacto contacto) {
@@ -50,10 +47,10 @@ public class ContactoController {
         contactoService.eliminarContacto(id);
         return ResponseEntity.noContent().build();
     }
-    
-    @DeleteMapping("/{userId}/{contactoId}")
-    public ResponseEntity<Void> eliminarContactoBidireccional(@PathVariable("userId") Long userId, @PathVariable("contactoId") Long contactoId) {
-        contactoService.eliminarContactoBidireccional(userId, contactoId);
-        return ResponseEntity.noContent().build();
-    }
+//    
+//    @DeleteMapping("/{userId}/{contactoId}")
+//    public ResponseEntity<Void> eliminarContactoBidireccional(@PathVariable("userId") Long userId, @PathVariable("contactoId") Long contactoId) {
+//        contactoService.eliminarContactoBidireccional(userId, contactoId);
+//        return ResponseEntity.noContent().build();
+//    }
 }

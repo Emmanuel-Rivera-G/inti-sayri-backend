@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/communities")
+@CrossOrigin("*")
 public class CommunityController {
 
     @Autowired

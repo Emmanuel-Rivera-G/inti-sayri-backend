@@ -1,5 +1,6 @@
 package pe.edu.utp.inti_sayri_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,8 +42,4 @@ public class User {
     
     @ManyToMany(mappedBy = "users")
     private List<Community> communities = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "usuario")
-    @JsonManagedReference
-    private List<Contacto> contacts;
 }

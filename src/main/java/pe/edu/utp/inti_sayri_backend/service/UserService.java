@@ -1,6 +1,7 @@
 package pe.edu.utp.inti_sayri_backend.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import java.util.Optional;
@@ -14,6 +15,10 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+    
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
     public Map<String, Object> registrarUsuario(User usuario) {
         Map<String, Object> response = new HashMap<>();
@@ -43,6 +48,7 @@ public class UserService {
         if (usuario.isPresent() && usuario.get().getContrasena().equals(contrasena)) {
             response.put("status", "success");
             response.put("message", "Inicio de sesión exitoso.");
+            response.put("nombreUsuario", usuario.get().getNombreCompleto());
         } else {
             response.put("status", "error");
             response.put("message", "Correo o contraseña incorrectos.");
@@ -97,4 +103,20 @@ public class UserService {
         
         return response;
     }
+    
+    public Map<String, Object> getUserName(Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        Optional<User> userOpt = userRepository.findById(userId);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            response.put("nombreCompleto", user.getNombreCompleto());
+        } else {
+            response.put("error", "Usuario no encontrado");
+        }
+
+        return response;
+    }
+    
+    
 }

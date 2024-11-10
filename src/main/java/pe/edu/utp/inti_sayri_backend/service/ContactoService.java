@@ -31,7 +31,7 @@ public class ContactoService {
     }
     
     public List<Contacto> obtenerContactosPorUserId(Long userId) {
-        return contactoRepository.findAllByUserId(userId);
+        return contactoRepository.findAllByUsuarioId(userId);
     }
     
     public void eliminarContacto(Long id) {
@@ -39,6 +39,6 @@ public class ContactoService {
     }
     
     public void eliminarContactoBidireccional(Long userId, Long contactoId) {
-        contactoRepository.deleteByUserIdAndContactoIdOrContactoIdAndUserId(userId, contactoId, contactoId, userId);
+        contactoRepository.deleteByUsuarioIdAndContactoIdOrContactoIdAndUsuarioId(userId, contactoId, contactoId, userId);
     }
 }

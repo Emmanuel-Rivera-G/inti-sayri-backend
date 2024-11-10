@@ -6,6 +6,7 @@ import pe.edu.utp.inti_sayri_backend.service.FavoritoService;
 
 @RestController
 @RequestMapping("/api/loction-favoritos")
+@CrossOrigin("*")
 public class FavoritoController {
 
     @Autowired

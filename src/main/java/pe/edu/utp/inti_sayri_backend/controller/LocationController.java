@@ -13,6 +13,7 @@ import pe.edu.utp.inti_sayri_backend.util.ResponseUtil;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/locations")
+@CrossOrigin("*")
 public class LocationController {
 
     private final LocationService locationService;

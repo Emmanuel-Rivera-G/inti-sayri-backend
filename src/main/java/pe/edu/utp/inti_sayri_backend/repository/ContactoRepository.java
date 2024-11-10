@@ -6,7 +6,7 @@ import pe.edu.utp.inti_sayri_backend.model.Contacto;
 
 public interface ContactoRepository extends JpaRepository<Contacto, Long> {
     
-    List<Contacto> findAllByUserId(Long userId);
+    List<Contacto> findAllByUsuarioId(Long usuarioId);
     
-    void deleteByUserIdAndContactoIdOrContactoIdAndUserId(Long userId, Long contactoId, Long contactoId2, Long userId2);
+    void deleteByUsuarioIdAndContactoIdOrContactoIdAndUsuarioId(Long usuarioId, Long contactoId, Long contactoId2, Long usuarioId2);
 }

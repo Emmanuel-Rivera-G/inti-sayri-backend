@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/alertas")
+@CrossOrigin("*")
 public class AlertaController {
 
     @Autowired

@@ -14,6 +14,7 @@ import pe.edu.utp.inti_sayri_backend.util.ResponseUtil;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/chats")
+@CrossOrigin("*")
 public class ChatController {
 
     private final ChatService chatService;

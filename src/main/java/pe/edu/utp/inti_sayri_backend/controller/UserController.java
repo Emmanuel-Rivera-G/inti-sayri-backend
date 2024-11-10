@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,14 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.utp.inti_sayri_backend.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import pe.edu.utp.inti_sayri_backend.model.User;
 import pe.edu.utp.inti_sayri_backend.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin("*")
 public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(users);
+    }
     
     @PostMapping("/{userId}/profile-photo")
     public ResponseEntity<?> uploadPhoto(@PathVariable("userId") Long userId, @RequestParam("file") MultipartFile file) {
@@ -65,6 +75,13 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getProfilePhoto(@PathVariable("userId") Long userId) {
         // Busca la URL de la foto de perfil en la base de datos
         Map<String, Object> response = userService.getProfilePhotoUrl(userId);
+        return ResponseUtil.createResponse(response, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{userId}/name")
+    public ResponseEntity<Map<String, Object>> getUserName(@PathVariable("userId") Long userId) {
+        // Llama al servicio para obtener solo el nombre del usuario
+        Map<String, Object> response = userService.getUserName(userId);
         return ResponseUtil.createResponse(response, HttpStatus.OK);
     }
 
