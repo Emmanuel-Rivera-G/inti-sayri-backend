@@ -68,13 +68,22 @@ public class ChatService {
         Map<String, Object> response = new HashMap<>();
         try {
             Optional<Chat> chat = chatRepository.findById(chatId);
+
+            Chat chatToUse;
             if (chat.isPresent()) {
-                message.setChat(chat.get());
-                Message savedMessage = messageRepository.save(message);
-                completeResponse(response, "success", "Mensaje agregado al chat con éxito", savedMessage);
+                chatToUse = chat.get();
             } else {
-                incompleteResponse(response, "error", "Chat no encontrado", "not_found");
+                chatToUse = new Chat();
+                chatToUse.setId(chatId);
+                chatToUse = chatRepository.save(chatToUse);
+                chatToUse.getMensajes().add(message);
+                response.put("newChatCreated", true);
             }
+
+            message.setChat(chatToUse);
+            Message savedMessage = messageRepository.save(message);
+            completeResponse(response, "success", "Mensaje agregado al chat con éxito", savedMessage);
+
         } catch (Exception e) {
             incompleteResponse(response, "error", "Error al agregar el mensaje al chat: " + e.getMessage());
         }

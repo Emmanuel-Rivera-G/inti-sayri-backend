@@ -4,9 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,21 +15,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "lugares")
+public class Location {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     
-    private String nombreCompleto;
+    private String address;
     
-    private String correoElectronico;
+    private Map<String,Double> location;
     
-    private String contrasena;
+    private String name;
     
-    private String profilePhotoUrl;
+    private String phone;
     
-    @ManyToMany(mappedBy = "participantes")
-    private List<Chat> chats;
 }

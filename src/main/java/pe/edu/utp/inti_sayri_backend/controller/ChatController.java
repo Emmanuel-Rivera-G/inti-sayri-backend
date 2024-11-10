@@ -1,6 +1,5 @@
 package pe.edu.utp.inti_sayri_backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.utp.inti_sayri_backend.model.Chat;
@@ -17,7 +16,7 @@ import pe.edu.utp.inti_sayri_backend.util.ResponseUtil;
 @RequestMapping("/api/chats")
 public class ChatController {
 
-    private ChatService chatService;
+    private final ChatService chatService;
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> createChat(@RequestBody Chat chat) {
